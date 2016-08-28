@@ -14,7 +14,7 @@ public class IntroMenuController : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        // Load translations
+        // Load translations from XML locale files
         enJsonStr = File.ReadAllText(Application.dataPath + "/locale/english.json");
         esJsonStr = File.ReadAllText(Application.dataPath + "/locale/spanish.json");
 
@@ -23,26 +23,20 @@ public class IntroMenuController : MonoBehaviour {
         esJsonData = JsonMapper.ToObject(esJsonStr);
     }
 	
-	// Update is called once per frame
-	void Update () {
-	
-	}
-
     void Awake()
     {
+        // We need to keep it alive so we dont lose locale variables
         DontDestroyOnLoad(transform.gameObject);
     }
 
     public void ClickEs()
     {
-        Debug.Log("Spanish");
         language = "spanish";
         SceneManager.LoadScene("Game");
     }
 
     public void ClickEn()
     {
-        Debug.Log("English");
         language = "english";
         SceneManager.LoadScene("Game");
     }

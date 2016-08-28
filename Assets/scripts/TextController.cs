@@ -2,20 +2,23 @@
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 using System.Collections;
+using LitJson;
 
 public class TextController : MonoBehaviour {
 
     public Text text;
+    private JsonData gameText;
+    private GameObject introMenuObj;
+    private IntroMenuController introMenuCtrl;
 
     // Use this for initialization
     void Start () {
-        GameObject introMenuObj = GameObject.Find("MainControllerScript");
-        IntroMenuController introMenuCtrl = introMenuObj.GetComponent<IntroMenuController>();
+        introMenuObj = GameObject.Find("MainControllerScript");
+        introMenuCtrl = introMenuObj.GetComponent<IntroMenuController>();
 
-        Debug.Log(introMenuCtrl.language);
+        setupTranslations();
+        text.text = (string) gameText["intro1"];
 
-        //switch (introMenuCtrl.language == "english")
-    
     }
 	
 	// Update is called once per frame
@@ -25,4 +28,17 @@ public class TextController : MonoBehaviour {
 
         }
 	}
+
+    void setupTranslations() {
+        switch (introMenuCtrl.language)
+        {
+            case "english":
+                gameText = introMenuCtrl.enJsonData;
+                break;
+
+            case "spanish":
+                gameText = introMenuCtrl.esJsonData;
+                break;
+        }
+    }
 }
